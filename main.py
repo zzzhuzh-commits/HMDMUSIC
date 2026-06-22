@@ -43,5 +43,8 @@ app.start()
 print("Bot Started Successfully ✅")
 
 idle()
+print("Reached before app.run()")
+app.run()
+print("Reached after app.run()")
 
 app.stop()
