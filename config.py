@@ -8,14 +8,14 @@ API_HASH = getenv("API_HASH")
 BOT_TOKEN = getenv("BOT_TOKEN")
 MONGO_URL = getenv("MONGO_URL")
 
-OWNER_ID = 8282175722
+STRING_SESSION = getenv("STRING_SESSION")
 
-OWNER_NAME = "حمد السوري"
+OWNER_ID = int(getenv("OWNER_ID"))
 
-OWNER_USERNAME = "@Q_0_R"
+OWNER_NAME = getenv("OWNER_NAME")
 
-OWNER_BIO = """
-مطور سورس HMDMUSIC 🎵
-"""
+OWNER_USERNAME = getenv("OWNER_USERNAME")
 
-OWNER_PHOTO = "رابط_الصورة"
+OWNER_BIO = getenv("OWNER_BIO")
+
+OWNER_PHOTO = getenv("OWNER_PHOTO")
