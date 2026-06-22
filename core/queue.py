@@ -1,20 +1,23 @@
-from pyrogram import Client, filters
+queues = {}
 
-from HMDMUSIC.core.queue import get_queue
+def add_to_queue(chat_id, song):
+    if chat_id not in queues:
+        queues[chat_id] = []
 
-@Client.on_message(filters.text & filters.regex("^القائمة$"))
-async def queue_command(_, message):
+    queues[chat_id].append(song)
 
-    queue = get_queue(message.chat.id)
 
-    if not queue:
-        return await message.reply_text(
-            "📭 القائمة فارغة"
-        )
+def get_queue(chat_id):
+    return queues.get(chat_id, [])
 
-    text = "📋 قائمة التشغيل\n\n"
 
-    for num, song in enumerate(queue, start=1):
-        text += f"{num}. {song}\n"
+def clear_queue(chat_id):
+    if chat_id in queues:
+        queues.pop(chat_id)
 
-    await message.reply_text(text)
+
+def pop_from_queue(chat_id):
+    if chat_id in queues and queues[chat_id]:
+        return queues[chat_id].pop(0)
+
+    return None
