@@ -13,20 +13,12 @@ app = Client(
     bot_token=BOT_TOKEN
 )
 
-try:
-    load_plugins()
-    print("Plugins Loaded ✅")
-except Exception as e:
-    print(f"Plugin Error: {e}")
-    raise
+load_plugins()
 
-try:
-    asyncio.run(ping_db())
-    print("MongoDB Connected ✅")
-except Exception as e:
-    print(f"MongoDB Error: {e}")
-    raise
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
+loop.run_until_complete(ping_db())
 
-print("Bot Starting ✅")
+print("MongoDB Connected ✅")
 
 app.run()
