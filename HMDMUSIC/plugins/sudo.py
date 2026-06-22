@@ -1,8 +1,7 @@
 from pyrogram import Client, filters
 from pyrogram.types import (
     InlineKeyboardMarkup,
-    InlineKeyboardButton,
-    CallbackQuery
+    InlineKeyboardButton
 )
 
 from config import (
@@ -13,11 +12,9 @@ from config import (
     OWNER_PHOTO
 )
 
-from HMDMUSIC.core.database import (
-    usersdb,
-    db
-)
+from HMDMUSIC.core.database import db
 
+usersdb = db.users
 groupsdb = db.groups
 
 
@@ -29,7 +26,7 @@ async def owner_info(_, message):
             [
                 InlineKeyboardButton(
                     "📞 التواصل",
-                    url=f"https://t.me/{Q_0_R}"
+                    url=f"https://t.me/{OWNER_USERNAME}"
                 )
             ]
         ]
@@ -38,8 +35,8 @@ async def owner_info(_, message):
     text = f"""
 👑 معلومات المطور
 
-• الاسم: {OWNER}
-• اليوزر: @Q_0_R
+• الاسم: {OWNER_NAME}
+• اليوزر: @{OWNER_USERNAME}
 
 📝 النبذة:
 {OWNER_BIO}
@@ -77,7 +74,6 @@ async def stats_command(_, message):
 📊 احصائيات HMDMUSIC
 
 👤 المستخدمين: {users}
-
 👥 المجموعات: {groups}
 """
     )
@@ -87,11 +83,11 @@ async def stats_command(_, message):
 async def source_command(_, message):
 
     await message.reply_text(
-        """
+        f"""
 🎵 HMDMUSIC
 
 🚀 إصدار 1.0
 
-👑 المطور: حمد السوري
+👑 المطور: {OWNER_NAME}
 """
     )
