@@ -5,9 +5,9 @@ from HMDMUSIC.utils.pluginloader import load_plugins
 from HMDMUSIC.core.mongodb import ping_db
 
 from flask import Flask
+import asyncio
 import threading
 import os
-import asyncio
 
 web = Flask(__name__)
 
@@ -18,7 +18,11 @@ def home():
 
 def run_web():
     port = int(os.environ.get("PORT", 10000))
-    web.run(host="0.0.0.0", port=port)
+    web.run(
+        host="0.0.0.0",
+        port=port,
+        use_reloader=False
+    )
 
 
 app = Client(
@@ -28,12 +32,12 @@ app = Client(
     bot_token=BOT_TOKEN
 )
 
-load_plugins()
-
 
 async def start_bot():
     await ping_db()
     print("MongoDB Connected ✅")
+
+    load_plugins()
 
     await app.start()
     print("Bot Started ✅")
