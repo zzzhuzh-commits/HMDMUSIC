@@ -2,11 +2,9 @@ from pyrogram import Client
 from config import API_ID, API_HASH, BOT_TOKEN
 
 from HMDMUSIC.utils.pluginloader import load_plugins
-from HMDMUSIC.core.mongodb import ping_db
 
 from flask import Flask
 import threading
-import asyncio
 import os
 
 web = Flask(__name__)
@@ -32,19 +30,6 @@ app = Client(
     bot_token=BOT_TOKEN
 )
 
-
-async def start_bot():
-    await ping_db()
-    print("MongoDB Connected ✅")
-
-    load_plugins()
-
-    await app.start()
-    print("Bot Started ✅")
-
-    await asyncio.Event().wait()
-
-
 threading.Thread(
     target=run_web,
     daemon=True
@@ -52,4 +37,7 @@ threading.Thread(
 
 print("Web Server Started ✅")
 
-asyncio.run(start_bot())
+load_plugins()
+print("Plugins Loaded ✅")
+
+app.run()
