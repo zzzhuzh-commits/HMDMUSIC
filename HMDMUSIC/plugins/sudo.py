@@ -1,4 +1,6 @@
 from pyrogram import Client, filters
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+
 from config import OWNER_ID
 
 
@@ -8,25 +10,30 @@ async def owner_panel(_, message):
     if message.from_user.id != OWNER_ID:
         return
 
-    await message.reply_text(
-        """
-👑 لوحة مطور HMDMUSIC
-
-• الاحصائيات
-• فحص
-• اذاعة
-
-🎵 HMDMUSIC
-"""
+    keyboard = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    "📊 الاحصائيات",
+                    callback_data="stats"
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    "📢 اذاعة",
+                    callback_data="broadcast"
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    "📡 فحص",
+                    callback_data="ping"
+                )
+            ]
+        ]
     )
 
-
-@Client.on_message(filters.text & filters.regex("^فحص$"))
-async def ping_command(_, message):
-
-    if message.from_user.id != OWNER_ID:
-        return
-
     await message.reply_text(
-        "✅ البوت يعمل بنجاح"
+        "👑 لوحة تحكم HMDMUSIC",
+        reply_markup=keyboard
     )
