@@ -1,8 +1,7 @@
-from pyrogram import filters
-from pyrogram import Client
+from pyrogram import Client, filters
 
-@Client.on_message(filters.text & filters.regex("^هلا$"))
-async def start_message(_, message):
+@Client.on_message(filters.command("start"))
+async def start_message(client, message):
     await message.reply_text(
         "🎵 أهلاً بك في HMDMUSIC"
     )
