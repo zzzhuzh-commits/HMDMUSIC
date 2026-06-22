@@ -1,10 +1,10 @@
-from pyrogram import Client
+from pyrogram import Client, idle
 from config import API_ID, API_HASH, BOT_TOKEN
 
 from HMDMUSIC.utils.pluginloader import load_plugins
 
 from flask import Flask
-from threading import Thread
+import threading
 import os
 
 web = Flask(__name__)
@@ -12,7 +12,6 @@ web = Flask(__name__)
 @web.route("/")
 def home():
     return "HMDMUSIC is running ✅"
-
 
 def run_web():
     port = int(os.environ.get("PORT", 10000))
@@ -22,7 +21,6 @@ def run_web():
         use_reloader=False
     )
 
-
 app = Client(
     "HMDMUSIC",
     api_id=API_ID,
@@ -30,16 +28,20 @@ app = Client(
     bot_token=BOT_TOKEN
 )
 
+threading.Thread(
+    target=run_web,
+    daemon=True
+).start()
 
-if __name__ == "__main__":
-    Thread(
-        target=run_web,
-        daemon=True
-    ).start()
+print("Web Server Started ✅")
 
-    print("Web Server Started ✅")
+load_plugins()
+print("Plugins Loaded ✅")
 
-    load_plugins()
-    print("Plugins Loaded ✅")
+print("Starting Telegram Bot...")
+app.start()
+print("Bot Started Successfully ✅")
 
-    app.run()
+idle()
+
+app.stop()
