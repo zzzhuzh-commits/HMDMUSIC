@@ -3,14 +3,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-API_ID = int(getenv("API_ID"))
+API_ID = int(getenv("API_ID", "0"))
 API_HASH = getenv("API_HASH")
 BOT_TOKEN = getenv("BOT_TOKEN")
 MONGO_URL = getenv("MONGO_URL")
 
 STRING_SESSION = getenv("STRING_SESSION")
 
-OWNER_ID = int(getenv("OWNER_ID"))
+OWNER_ID = int(getenv("OWNER_ID", "0"))
 
 OWNER_NAME = getenv("OWNER_NAME")
 
