@@ -1,32 +1,11 @@
-from pyrogram import Client, filters
-from config import OWNER_ID
+from os import getenv
+from dotenv import load_dotenv
 
+load_dotenv()
 
-@Client.on_message(filters.text & filters.regex("^المطور$"))
-async def owner_panel(_, message):
+API_ID = int(getenv("API_ID"))
+API_HASH = getenv("API_HASH")
+BOT_TOKEN = getenv("BOT_TOKEN")
+MONGO_URL = getenv("MONGO_URL")
 
-    if message.from_user.id != OWNER_ID:
-        return
-
-    await message.reply_text(
-        """
-👑 لوحة مطور HMDMUSIC
-
-• الاحصائيات
-• فحص
-• اذاعة
-
-🎵 HMDMUSIC
-"""
-    )
-
-
-@Client.on_message(filters.text & filters.regex("^فحص$"))
-async def ping_command(_, message):
-
-    if message.from_user.id != OWNER_ID:
-        return
-
-    await message.reply_text(
-        "✅ البوت يعمل بنجاح"
-    )
+OWNER_ID = 8282175722
