@@ -4,7 +4,7 @@ from config import API_ID, API_HASH, BOT_TOKEN
 from HMDMUSIC.utils.pluginloader import load_plugins
 
 from flask import Flask
-import threading
+from threading import Thread
 import os
 
 web = Flask(__name__)
@@ -30,14 +30,16 @@ app = Client(
     bot_token=BOT_TOKEN
 )
 
-threading.Thread(
-    target=run_web,
-    daemon=True
-).start()
 
-print("Web Server Started ✅")
+if __name__ == "__main__":
+    Thread(
+        target=run_web,
+        daemon=True
+    ).start()
 
-load_plugins()
-print("Plugins Loaded ✅")
+    print("Web Server Started ✅")
 
-app.run()
+    load_plugins()
+    print("Plugins Loaded ✅")
+
+    app.run()
