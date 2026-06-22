@@ -30,9 +30,7 @@ app = Client(
 
 load_plugins()
 
-loop = asyncio.new_event_loop()
-asyncio.set_event_loop(loop)
-loop.run_until_complete(ping_db())
+asyncio.run(ping_db())
 
 print("MongoDB Connected ✅")
 
