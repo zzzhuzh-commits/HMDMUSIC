@@ -3,3 +3,6 @@ tgcrypto
 python-dotenv
 motor
 pymongo
+py-tgcalls
+yt-dlp
+youtube-search-python
