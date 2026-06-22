@@ -5,12 +5,10 @@ app = Client(
     "HMDMUSIC",
     api_id=API_ID,
     api_hash=API_HASH,
-    bot_token=BOT_TOKEN
+    bot_token=BOT_TOKEN,
 )
 
-@app.on_message()
-async def test(_, message):
-    if message.text == "هلا":
-        await message.reply("هلا والله من HMDMUSIC 🎵")
+import HMDMUSIC.plugins.start
+import HMDMUSIC.plugins.help
 
 app.run()
