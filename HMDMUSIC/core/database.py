@@ -4,3 +4,6 @@ from config import MONGO_URL
 mongo = AsyncIOMotorClient(MONGO_URL)
 
 db = mongo.HMDMUSIC
+
+usersdb = db.users
+groupsdb = db.groups
