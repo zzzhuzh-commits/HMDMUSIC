@@ -43,10 +43,5 @@ app.start()
 print("Bot Started Successfully ✅")
 
 idle()
-print("Starting Telegram Bot...")
-app.start()
-print("Bot Started Successfully ✅")
-
-idle()
 
 app.stop()
