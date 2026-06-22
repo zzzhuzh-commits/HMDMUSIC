@@ -5,83 +5,93 @@ from pyrogram.types import (
     CallbackQuery
 )
 
-from config import OWNER_ID
+from config import (
+    OWNER_ID,
+    OWNER_NAME,
+    OWNER_USERNAME,
+    OWNER_BIO,
+    OWNER_PHOTO
+)
+
+from HMDMUSIC.core.database import (
+    usersdb,
+    db
+)
+
+groupsdb = db.groups
 
 
 @Client.on_message(filters.text & filters.regex("^المطور$"))
-async def owner_panel(_, message):
-
-    if message.from_user.id != OWNER_ID:
-        return
+async def owner_info(_, message):
 
     keyboard = InlineKeyboardMarkup(
         [
             [
                 InlineKeyboardButton(
-                    "📊 الاحصائيات",
-                    callback_data="stats"
-                )
-            ],
-            [
-                InlineKeyboardButton(
-                    "📢 اذاعة",
-                    callback_data="broadcast"
-                )
-            ],
-            [
-                InlineKeyboardButton(
-                    "📡 فحص",
-                    callback_data="ping"
+                    "📞 التواصل",
+                    url=f"https://t.me/{Q_0_R}"
                 )
             ]
         ]
     )
 
-    await message.reply_text(
-        "👑 لوحة تحكم HMDMUSIC",
+    text = f"""
+👑 معلومات المطور
+
+• الاسم: {OWNER}
+• اليوزر: @Q_0_R
+
+📝 النبذة:
+{OWNER_BIO}
+"""
+
+    await message.reply_photo(
+        OWNER_PHOTO,
+        caption=text,
         reply_markup=keyboard
     )
 
 
-@Client.on_callback_query(filters.regex("^ping$"))
-async def ping_callback(_, query: CallbackQuery):
+@Client.on_message(filters.text & filters.regex("^فحص$"))
+async def ping_command(_, message):
 
-    if query.from_user.id != OWNER_ID:
+    if message.from_user.id != OWNER_ID:
         return
 
-    await query.answer(
-        "✅ البوت يعمل بنجاح",
-        show_alert=True
+    await message.reply_text(
+        "✅ HMDMUSIC يعمل بنجاح"
     )
 
 
-@Client.on_callback_query(filters.regex("^stats$"))
-async def stats_callback(_, query: CallbackQuery):
+@Client.on_message(filters.text & filters.regex("^الاحصائيات$"))
+async def stats_command(_, message):
 
-    if query.from_user.id != OWNER_ID:
+    if message.from_user.id != OWNER_ID:
         return
 
-    await query.answer()
+    users = await usersdb.count_documents({})
+    groups = await groupsdb.count_documents({})
 
-    await query.message.edit_text(
-        """
+    await message.reply_text(
+        f"""
 📊 احصائيات HMDMUSIC
 
-👤 المستخدمين: قريباً
-👥 المجموعات: قريباً
+👤 المستخدمين: {users}
 
-🚀 HMDMUSIC
+👥 المجموعات: {groups}
 """
     )
 
 
-@Client.on_callback_query(filters.regex("^broadcast$"))
-async def broadcast_callback(_, query: CallbackQuery):
+@Client.on_message(filters.text & filters.regex("^السورس$"))
+async def source_command(_, message):
 
-    if query.from_user.id != OWNER_ID:
-        return
+    await message.reply_text(
+        """
+🎵 HMDMUSIC
 
-    await query.answer(
-        "📢 سيتم إضافة نظام الإذاعة قريباً",
-        show_alert=True
+🚀 إصدار 1.0
+
+👑 المطور: حمد السوري
+"""
     )
