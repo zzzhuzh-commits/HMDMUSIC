@@ -32,24 +32,20 @@ app = Client(
     bot_token=BOT_TOKEN
 )
 
+if __name__ == "__main__":
+    threading.Thread(
+        target=run_web,
+        daemon=True
+    ).start()
 
-async def start_bot():
-    await ping_db()
+    print("Web Server Started ✅")
+
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
+    loop.run_until_complete(ping_db())
     print("MongoDB Connected ✅")
 
     load_plugins()
 
-    await app.start()
-    print("Bot Started ✅")
-
-    await asyncio.Event().wait()
-
-
-threading.Thread(
-    target=run_web,
-    daemon=True
-).start()
-
-print("Web Server Started ✅")
-
-asyncio.run(start_bot())
+    app.run()
