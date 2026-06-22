@@ -30,11 +30,16 @@ app = Client(
 
 load_plugins()
 
-asyncio.run(ping_db())
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
+loop.run_until_complete(ping_db())
 
 print("MongoDB Connected ✅")
 
-threading.Thread(target=run_web, daemon=True).start()
+threading.Thread(
+    target=run_web,
+    daemon=True
+).start()
 
 print("Web Server Started ✅")
 
